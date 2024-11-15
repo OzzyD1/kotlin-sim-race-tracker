@@ -1,7 +1,18 @@
 package ie.setu
 
-fun main() {
+import ie.setu.utils.readNextInt
+import kotlin.system.exitProcess
 
+fun main() {
+    mainMenu()
+}
+
+fun runMenu() {
+    do {
+        when (val option = mainMenu()) {
+            0 -> exitProcess(0)
+        }
+    } while (true)
 }
 
 fun mainMenu(): Int {
@@ -29,4 +40,9 @@ fun mainMenu(): Int {
          > ------------------------------------------
          >""".trimMargin(">"))
     return readNextInt(" > ==>>")
+}
+
+fun exit(){
+    println("Exiting App")
+    exitProcess(0)
 }
