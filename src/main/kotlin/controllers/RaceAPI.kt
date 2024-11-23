@@ -6,7 +6,7 @@ class RaceAPI {
 
     private var races = ArrayList<Race>()
 
-    fun add(note: Race): Boolean{
+    fun add(race: Race): Boolean{
         return races.add(race)
     }
 

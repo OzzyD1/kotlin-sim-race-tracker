@@ -9,7 +9,7 @@ private val logger = KotlinLogging.logger {}
 
 fun main() {
     logger.info { "App started successfully!" }
-    mainMenu()
+    runMenu()
 }
 
 fun runMenu() {
@@ -17,6 +17,7 @@ fun runMenu() {
         when (val option = mainMenu()) {
             0 -> exitProcess(0)
             1 -> addRace()
+            2 -> listRaces()
             else -> println("Invalid option")
         }
     } while (true)
@@ -57,6 +58,10 @@ fun addRace(){
     val raceClass = readNextLine("Enter your driver class (Pro, Pro-Am or Am): ")
     //TODO: Need to make below boolean
     val raceCompleted = readNextLine("Was race completed: ")
+}
+
+fun listRaces() {
+    logger.info { "listRaces() invoked" }
 }
 
 fun exit(){
