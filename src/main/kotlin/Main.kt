@@ -23,6 +23,7 @@ fun runMenu() {
             0 -> exitApp()
             1 -> addRace()
             2 -> listAllRaces()
+            3 -> updateRace()
             else -> println("Invalid option")
         }
     } while (true)
@@ -83,6 +84,33 @@ fun listAllRaces() {
 //    if (raceAPI.numberOfRaces() > 0){
 //
 //    } else { println("No events to display") }
+
+fun updateRace() {
+    listAllRaces()
+    if (raceAPI.numberOfRaces() > 0) {
+        val id = readNextInt("Enter race number to update")
+        if (raceAPI.findRace(id) != null) {
+            val eventName = readNextLine("Enter event name: ")
+            val raceTrack = readNextLine("Enter event track: ")
+
+            var raceClass: String
+            do {
+                raceClass = readNextLine("Enter your driver class (Pro, Pro-Am or Am): ")
+            } while (!isValidDriverClass(raceClass))
+
+            val raceCompleted = readNextBoolean("Was the race completed? (1: True or 0: False): ")
+
+            if (raceAPI.update(id, Race(id, eventName, raceTrack, raceClass, raceCompleted))){
+                println("Update Successful")
+            } else {
+                println("Update Failed")
+                }
+        }
+        else {
+            println("Race number not found")
+        }
+    }
+}
 
 fun exitApp(){
     println("Exiting App")
