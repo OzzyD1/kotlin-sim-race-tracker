@@ -11,6 +11,11 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    // https://mvnrepository.com/artifact/io.github.oshai/kotlin-logging
+    implementation("io.github.oshai:kotlin-logging:7.0.0")
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
+    implementation("org.slf4j:slf4j-simple:2.0.16")
+
 }
 
 tasks.test {
