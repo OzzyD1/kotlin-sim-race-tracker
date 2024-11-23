@@ -1,9 +1,14 @@
 package ie.setu
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import ie.setu.utils.readNextInt
+import ie.setu.utils.readNextLine
 import kotlin.system.exitProcess
 
+private val logger = KotlinLogging.logger {}
+
 fun main() {
+    logger.info { "App started successfully!" }
     mainMenu()
 }
 
@@ -11,6 +16,8 @@ fun runMenu() {
     do {
         when (val option = mainMenu()) {
             0 -> exitProcess(0)
+            1 -> addRace()
+            else -> println("Invalid option")
         }
     } while (true)
 }
@@ -29,9 +36,9 @@ fun mainMenu(): Int {
          > |   6) Search race (by desc)             |
          > ------------------------------------------
          > | LAP MENU                               | 
-         > |   6) Add lap to a race                 |
-         > |   7) Update lap contents on a race     |
-         > |   8) Delete lap from a race            |
+         > |   7) Add lap to a race                 |
+         > |   8) Update lap contents on a race     |
+         > |   9) Delete lap from a race            |
          > ------------------------------------------
          > |   20) Save races                       |
          > |   21) Load races                       |
@@ -40,6 +47,16 @@ fun mainMenu(): Int {
          > ------------------------------------------
          >""".trimMargin(">"))
     return readNextInt(" > ==>>")
+}
+
+fun addRace(){
+    logger.info { "addRace() invoked" }
+    val eventName = readNextLine("Enter event name: ")
+    val raceTrack = readNextLine("Enter event track: ")
+    //TODO: There should only be 3 options below
+    val raceClass = readNextLine("Enter your driver class (Pro, Pro-Am or Am): ")
+    //TODO: Need to make below boolean
+    val raceCompleted = readNextLine("Was race completed: ")
 }
 
 fun exit(){
