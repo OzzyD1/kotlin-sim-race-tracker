@@ -1,10 +1,13 @@
 package ie.setu
 
+import ie.setu.controllers.RaceAPI
+import ie.setu.models.Race
 import io.github.oshai.kotlinlogging.KotlinLogging
 import ie.setu.utils.readNextInt
 import ie.setu.utils.readNextLine
 import kotlin.system.exitProcess
 
+private val raceAPI = RaceAPI()
 private val logger = KotlinLogging.logger {}
 
 fun main() {
@@ -57,7 +60,11 @@ fun addRace(){
     //TODO: There should only be 3 options below
     val raceClass = readNextLine("Enter your driver class (Pro, Pro-Am or Am): ")
     //TODO: Need to make below boolean
-    val raceCompleted = readNextLine("Was race completed: ")
+    val raceCompleted = readNextLine("Was race completed(True or False): ")
+
+    val isAdded = raceAPI.add(Race(eventName = eventName, raceTrack = raceTrack, raceClass = raceClass, raceCompleted = raceCompleted))
+
+    if (isAdded) { println("$eventName added successfully") } else { println("Add Unsuccessful") }
 }
 
 fun listRaces() {

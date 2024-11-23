@@ -5,7 +5,7 @@ data class Race(
     var eventName: String,
     var raceTrack: String,
     var raceClass: String,
-    var raceCompleted: Boolean
+    var raceCompleted: String
 ){
 
 }

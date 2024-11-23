@@ -9,5 +9,4 @@ class RaceAPI {
     fun add(race: Race): Boolean{
         return races.add(race)
     }
-
 }
