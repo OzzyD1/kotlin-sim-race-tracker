@@ -18,9 +18,9 @@ fun main() {
 fun runMenu() {
     do {
         when (val option = mainMenu()) {
-            0 -> exitProcess(0)
+            0 -> exitApp()
             1 -> addRace()
-            2 -> listRaces()
+            2 -> listAllRaces()
             else -> println("Invalid option")
         }
     } while (true)
@@ -55,6 +55,7 @@ fun mainMenu(): Int {
 
 fun addRace(){
     logger.info { "addRace() invoked" }
+
     val eventName = readNextLine("Enter event name: ")
     val raceTrack = readNextLine("Enter event track: ")
     //TODO: There should only be 3 options below
@@ -67,11 +68,19 @@ fun addRace(){
     if (isAdded) { println("$eventName added successfully") } else { println("Add Unsuccessful") }
 }
 
-fun listRaces() {
-    logger.info { "listRaces() invoked" }
+fun listAllRaces() {
+    println(raceAPI.listAllRaces())
 }
 
-fun exit(){
+//TODO: This will display races with different statuses later
+//fun listRaces() {
+//    logger.info { "listRaces() invoked" }
+//
+//    if (raceAPI.numberOfRaces() > 0){
+//
+//    } else { println("No events to display") }
+
+fun exitApp(){
     println("Exiting App")
     exitProcess(0)
 }
