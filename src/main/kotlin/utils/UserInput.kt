@@ -15,3 +15,13 @@ fun readNextInt(prompt: String?): Int {
         }
     } while (true)
 }
+
+fun readNextBoolean(prompt: String?): Boolean {
+    while (true) {
+        when (readNextLine(prompt)) {
+            "1" -> return true
+            "0" -> return false
+            else -> println("Invalid input. Please enter 1 for True or 0 for False.")
+        }
+    }
+}

@@ -2,9 +2,11 @@ package ie.setu
 
 import ie.setu.controllers.RaceAPI
 import ie.setu.models.Race
+import ie.setu.utils.isValidDriverClass
 import io.github.oshai.kotlinlogging.KotlinLogging
 import ie.setu.utils.readNextInt
 import ie.setu.utils.readNextLine
+import ie.setu.utils.readNextBoolean
 import kotlin.system.exitProcess
 
 private val raceAPI = RaceAPI()
@@ -42,7 +44,7 @@ fun mainMenu(): Int {
          > | LAP MENU                               | 
          > |   7) Add lap to a race                 |
          > |   8) Update lap contents on a race     |
-         > |   9) Delete lap from a race            |
+         > |   9) Delete lap from a race            |A
          > ------------------------------------------
          > |   20) Save races                       |
          > |   21) Load races                       |
@@ -58,13 +60,15 @@ fun addRace(){
 
     val eventName = readNextLine("Enter event name: ")
     val raceTrack = readNextLine("Enter event track: ")
-    //TODO: There should only be 3 options below
-    val raceClass = readNextLine("Enter your driver class (Pro, Pro-Am or Am): ")
-    //TODO: Need to make below boolean
-    val raceCompleted = readNextLine("Was race completed(True or False): ")
+
+    var raceClass: String
+    do {
+        raceClass = readNextLine("Enter your driver class (Pro, Pro-Am or Am): ")
+    } while (!isValidDriverClass(raceClass))
+
+    val raceCompleted = readNextBoolean("Was the race completed? (1: True or 0: False): ")
 
     val isAdded = raceAPI.add(Race(eventName = eventName, raceTrack = raceTrack, raceClass = raceClass, raceCompleted = raceCompleted))
-
     if (isAdded) { println("$eventName added successfully") } else { println("Add Unsuccessful") }
 }
 
