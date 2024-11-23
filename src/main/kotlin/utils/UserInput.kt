@@ -1,5 +1,10 @@
 package ie.setu.utils
 
+fun readNextLine(prompt: String?): String {
+    print(prompt)
+    return readln()
+}
+
 fun readNextInt(prompt: String?): Int {
     do {
         try {

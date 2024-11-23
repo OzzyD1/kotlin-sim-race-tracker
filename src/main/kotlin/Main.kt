@@ -1,22 +1,26 @@
 package ie.setu
 
+import ie.setu.controllers.RaceAPI
+import ie.setu.models.Race
 import io.github.oshai.kotlinlogging.KotlinLogging
 import ie.setu.utils.readNextInt
 import ie.setu.utils.readNextLine
 import kotlin.system.exitProcess
 
+private val raceAPI = RaceAPI()
 private val logger = KotlinLogging.logger {}
 
 fun main() {
     logger.info { "App started successfully!" }
-    mainMenu()
+    runMenu()
 }
 
 fun runMenu() {
     do {
         when (val option = mainMenu()) {
-            0 -> exitProcess(0)
+            0 -> exitApp()
             1 -> addRace()
+            2 -> listAllRaces()
             else -> println("Invalid option")
         }
     } while (true)
@@ -51,15 +55,32 @@ fun mainMenu(): Int {
 
 fun addRace(){
     logger.info { "addRace() invoked" }
+
     val eventName = readNextLine("Enter event name: ")
     val raceTrack = readNextLine("Enter event track: ")
     //TODO: There should only be 3 options below
     val raceClass = readNextLine("Enter your driver class (Pro, Pro-Am or Am): ")
     //TODO: Need to make below boolean
-    val raceCompleted = readNextLine("Was race completed: ")
+    val raceCompleted = readNextLine("Was race completed(True or False): ")
+
+    val isAdded = raceAPI.add(Race(eventName = eventName, raceTrack = raceTrack, raceClass = raceClass, raceCompleted = raceCompleted))
+
+    if (isAdded) { println("$eventName added successfully") } else { println("Add Unsuccessful") }
 }
 
-fun exit(){
+fun listAllRaces() {
+    println(raceAPI.listAllRaces())
+}
+
+//TODO: This will display races with different statuses later
+//fun listRaces() {
+//    logger.info { "listRaces() invoked" }
+//
+//    if (raceAPI.numberOfRaces() > 0){
+//
+//    } else { println("No events to display") }
+
+fun exitApp(){
     println("Exiting App")
     exitProcess(0)
 }
