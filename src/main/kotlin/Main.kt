@@ -40,35 +40,37 @@ fun mainMenu(): Int {
          > |   0) Exit                              |
          > ------------------------------------------
          >""".trimMargin(">"))
-    return readNextInt(" > ==>> ")
+    return readNextInt(" MAIN MENU ==>> ")
 }
 
 //RACE MANAGEMENT (CRUD)
 fun raceManagementMenu() {
-    val option = readNextInt("""
-        > -------------------------------------------
-         > |        RACE MENU                       |
-         > ------------------------------------------
-         > |   1) Add a race                        |
-         > |   2) List all races                    |
-         > |   3) Update a race                     |
-         > |   NA) Delete a race                    |
-         > |   NA) Archive a race                   |
-         > |   NA) Search race (by desc)            |
-         > ------------------------------------------
-         > |   9) Return                            |
-         > ------------------------------------------
-         >""".trimMargin(">")
-    )
+    do {
+        val option = readNextInt("""
+            > -------------------------------------------
+             > |        RACE MENU                       |
+             > ------------------------------------------
+             > |   1) Add a race                        |
+             > |   2) List all races                    |
+             > |   3) Update a race                     |
+             > |   NA) Delete a race                    |
+             > |   NA) Archive a race                   |
+             > |   NA) Search race (by desc)            |
+             > ------------------------------------------
+             > |   9) Return                            |
+             > ------------------------------------------
+             > RACE MENU ==>> """.trimMargin(">")
+        )
 
-    when (option){
-        1 -> addRace()
-        2 -> listAllRaces()
-        3 -> updateRace()
-        4 -> deleteRace()
-        9 -> runMenu()
-        else -> println("Invalid Option")
-    }
+        when (option) {
+            1 -> addRace()
+            2 -> listAllRaces()
+            3 -> updateRace()
+            4 -> deleteRace()
+            9 -> runMenu()
+            else -> println("Invalid Option")
+        }
+    } while (true)
 }
 
 fun addRace(){
@@ -141,45 +143,49 @@ fun deleteRace() {
 
 //LAP MANAGEMENT
 fun lapManagementMenu() {
-    val option = readNextInt(
-        """
-        > -------------------------------------------
-         > |        LAP MENU                        |
-         > ------------------------------------------
-         > |   NA) Add lap to a race                |
-         > |   NA) Update lap contents on a race    |
-         > |   NA) Delete lap from a race           |
-         > ------------------------------------------
-         > |   9) Return                            |
-         > ------------------------------------------
-         >""".trimMargin(">")
-    )
+    do {
+        val option = readNextInt(
+            """
+            > -------------------------------------------
+             > |        LAP MENU                        |
+             > ------------------------------------------
+             > |   NA) Add lap to a race                |
+             > |   NA) Update lap contents on a race    |
+             > |   NA) Delete lap from a race           |
+             > ------------------------------------------
+             > |   9) Return                            |
+             > ------------------------------------------
+             > LAP MENU ==>> """.trimMargin(">")
+        )
 
-    when (option) {
-        9 -> runMenu()
-        else -> println("Invalid Option")
-    }
+        when (option) {
+            9 -> runMenu()
+            else -> println("Invalid Option")
+        }
+    } while (true)
 }
 
 //DATA MANAGEMENT
 fun dataManagementMenu() {
-    val option = readNextInt(
-        """
-        > -------------------------------------------
-         > |        DATA MENU                       |
-         > ------------------------------------------
-         > |   NA) Save races                       |
-         > |   NA) Load races                       |
-         > ------------------------------------------
-         > |   9) Return                            |
-         > ------------------------------------------
-         >""".trimMargin(">")
-    )
+    do {
+        val option = readNextInt(
+            """
+            > -------------------------------------------
+             > |        DATA MENU                       |
+             > ------------------------------------------
+             > |   NA) Save races                       |
+             > |   NA) Load races                       |
+             > ------------------------------------------
+             > |   9) Return                            |
+             > ------------------------------------------
+             > DATA MENU ==>> """.trimMargin(">")
+        )
 
-    when (option) {
-        9 -> runMenu()
-        else -> println("Invalid Option")
-    }
+        when (option) {
+            9 -> runMenu()
+            else -> println("Invalid Option")
+        }
+    } while (true)
 }
 
 fun exitApp(){
