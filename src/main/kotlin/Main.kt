@@ -21,9 +21,9 @@ fun runMenu() {
     do {
         when (val option = mainMenu()) {
             0 -> exitApp()
-            1 -> addRace()
-            2 -> listAllRaces()
-            3 -> updateRace()
+            1 -> raceManagementMenu()
+            2 -> lapManagementMenu()
+            3 -> dataManagementMenu()
             else -> println("Invalid option")
         }
     } while (true)
@@ -34,30 +34,43 @@ fun mainMenu(): Int {
         > -------------------------------------------
          > |        SIM RACE TRACKER APP            |
          > ------------------------------------------
-         > | RACE MENU                              |
-         > |   1) Add a race                        |
-         > |   2) List all races                    |
-         > |   3) Update a race                     |
-         > |   4) Delete a race                     |
-         > |   5) Archive a race                    |
-         > |   6) Search race (by desc)             |
-         > ------------------------------------------
-         > | LAP MENU                               | 
-         > |   7) Add lap to a race                 |
-         > |   8) Update lap contents on a race     |
-         > |   9) Delete lap from a race            |A
-         > ------------------------------------------
-         > |   20) Save races                       |
-         > |   21) Load races                       |
-         > ------------------------------------------
+         > |   1) Race Menu                         | 
+         > |   2) Lap Menu                          |
+         > |   3) Data Menu                         |
          > |   0) Exit                              |
          > ------------------------------------------
          >""".trimMargin(">"))
     return readNextInt(" > ==>>")
 }
 
+//RACE MANAGEMENT
+fun raceManagementMenu() {
+    val option = readNextInt("""
+        > -------------------------------------------
+         > |        RACE MENU                       |
+         > ------------------------------------------
+         > |   1) Add a race                        |
+         > |   2) List all races                    |
+         > |   3) Update a race                     |
+         > |   NA) Delete a race                    |
+         > |   NA) Archive a race                   |
+         > |   NA) Search race (by desc)            |
+         > ------------------------------------------
+         > |   9) Return                            |
+         > ------------------------------------------
+         >""".trimMargin(">")
+    )
+
+    when (option){
+        1 -> addRace()
+        2 -> listAllRaces()
+        3 -> updateRace()
+        9 -> runMenu()
+        else -> println("Invalid Option")
+    }
+}
+
 fun addRace(){
-    logger.info { "addRace() invoked" }
 
     val eventName = readNextLine("Enter event name: ")
     val raceTrack = readNextLine("Enter event track: ")
@@ -109,6 +122,49 @@ fun updateRace() {
         else {
             println("Race number not found")
         }
+    }
+}
+
+//LAP MANAGEMENT
+fun lapManagementMenu() {
+    val option = readNextInt(
+        """
+        > -------------------------------------------
+         > |        LAP MENU                        |
+         > ------------------------------------------
+         > |   NA) Add lap to a race                |
+         > |   NA) Update lap contents on a race    |
+         > |   NA) Delete lap from a race           |
+         > ------------------------------------------
+         > |   9) Return                            |
+         > ------------------------------------------
+         >""".trimMargin(">")
+    )
+
+    when (option) {
+        9 -> runMenu()
+        else -> println("Invalid Option")
+    }
+}
+
+//DATA MANAGEMENT
+fun dataManagementMenu() {
+    val option = readNextInt(
+        """
+        > -------------------------------------------
+         > |        DATA MENU                       |
+         > ------------------------------------------
+         > |   NA) Save races                       |
+         > |   NA) Load races                       |
+         > ------------------------------------------
+         > |   9) Return                            |
+         > ------------------------------------------
+         >""".trimMargin(">")
+    )
+
+    when (option) {
+        9 -> runMenu()
+        else -> println("Invalid Option")
     }
 }
 
