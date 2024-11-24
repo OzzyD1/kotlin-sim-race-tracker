@@ -23,6 +23,8 @@ class RaceAPI {
         return false
     }
 
+    fun delete(id: Int) = races.removeIf {race -> race.raceID == id}
+
 //Listing
     fun listAllRaces(): String = if (races.isEmpty()) "No Races Stored" else formatListString(races)
 

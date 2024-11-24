@@ -24,7 +24,7 @@ fun runMenu() {
             1 -> raceManagementMenu()
             2 -> lapManagementMenu()
             3 -> dataManagementMenu()
-            else -> println("Invalid option")
+            else -> println("Invalid option: $option")
         }
     } while (true)
 }
@@ -40,10 +40,10 @@ fun mainMenu(): Int {
          > |   0) Exit                              |
          > ------------------------------------------
          >""".trimMargin(">"))
-    return readNextInt(" > ==>>")
+    return readNextInt(" > ==>> ")
 }
 
-//RACE MANAGEMENT
+//RACE MANAGEMENT (CRUD)
 fun raceManagementMenu() {
     val option = readNextInt("""
         > -------------------------------------------
@@ -65,6 +65,7 @@ fun raceManagementMenu() {
         1 -> addRace()
         2 -> listAllRaces()
         3 -> updateRace()
+        4 -> deleteRace()
         9 -> runMenu()
         else -> println("Invalid Option")
     }
@@ -121,6 +122,19 @@ fun updateRace() {
         }
         else {
             println("Race number not found")
+        }
+    }
+}
+
+fun deleteRace() {
+    listAllRaces()
+    if (raceAPI.numberOfRaces() > 0) {
+        val iD = readNextInt("Enter ID of race to delete: ")
+        val raceToDelete = raceAPI.delete(iD)
+        if (raceToDelete){
+            println("$iD Deleted Successfully")
+        } else {
+            println("Delete Unsuccessful")
         }
     }
 }
