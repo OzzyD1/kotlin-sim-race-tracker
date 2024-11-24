@@ -34,9 +34,9 @@ fun mainMenu(): Int {
         > -------------------------------------------
          > |        SIM RACE TRACKER APP            |
          > ------------------------------------------
-         > |   1) Race Menu                         | 
-         > |   2) Lap Menu                          |
-         > |   3) Data Menu                         |
+         > |   1) Race Menu >                       | 
+         > |   2) Lap Menu >                        |
+         > |   3) Data Menu >                       |
          > |   0) Exit                              |
          > ------------------------------------------
          >""".trimMargin(">"))
@@ -51,20 +51,21 @@ fun raceManagementMenu() {
              > |        RACE MENU                       |
              > ------------------------------------------
              > |   1) Add a race                        |
-             > |   2) List all races                    |
+             > |   2) List Races >                      |
              > |   3) Update a race                     |
-             > |   NA) Delete a race                    |
+             > |   4) Delete a race                     |
              > |   NA) Archive a race                   |
              > |   NA) Search race (by desc)            |
              > ------------------------------------------
              > |   9) Return                            |
+             > ------------------------------------------
              > ------------------------------------------
              > RACE MENU ==>> """.trimMargin(">")
         )
 
         when (option) {
             1 -> addRace()
-            2 -> listAllRaces()
+            2 -> listRaces()
             3 -> updateRace()
             4 -> deleteRace()
             9 -> runMenu()
@@ -74,7 +75,6 @@ fun raceManagementMenu() {
 }
 
 fun addRace(){
-
     val eventName = readNextLine("Enter event name: ")
     val raceTrack = readNextLine("Enter event track: ")
 
@@ -89,17 +89,30 @@ fun addRace(){
     if (isAdded) { println("$eventName added successfully") } else { println("Add Unsuccessful") }
 }
 
-fun listAllRaces() {
-    println(raceAPI.listAllRaces())
-}
+fun listAllRaces() = println(raceAPI.listAllRaces())
+fun listCompletedRaces() = println(raceAPI.listCompletedRaces())
+fun listUncompletedRaces() = println(raceAPI.listUncompletedRaces())
 
-//TODO: This will display races with different statuses later
-//fun listRaces() {
-//    logger.info { "listRaces() invoked" }
-//
-//    if (raceAPI.numberOfRaces() > 0){
-//
-//    } else { println("No events to display") }
+fun listRaces() {
+    if (raceAPI.numberOfRaces() > 0) {
+        val option = readNextInt(
+            """
+                  > --------------------------------
+                  > |   1) View ALL Races          |
+                  > |   2) View COMPLETED Races    |
+                  > |   3) View UNCOMPLETED Races  |
+                  > --------------------------------
+         > ==>> """.trimMargin(">")
+        )
+
+        when (option) {
+            1 -> listAllRaces()
+            2 -> listCompletedRaces()
+            3 -> listUncompletedRaces()
+            else -> println("Invalid option entered: $option")
+        }
+    } else { println("No events to display") }
+}
 
 fun updateRace() {
     listAllRaces()
