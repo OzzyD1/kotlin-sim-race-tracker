@@ -162,7 +162,7 @@ fun lapManagementMenu() {
             > -------------------------------------------
              > |        LAP MENU                        |
              > ------------------------------------------
-             > |   NA) Add lap to a race                |
+             > |   1) Add lap to a race                |
              > |   NA) Update lap contents on a race    |
              > |   NA) Delete lap from a race           |
              > ------------------------------------------
@@ -172,11 +172,16 @@ fun lapManagementMenu() {
         )
 
         when (option) {
+//            1 -> addLapToRace()
             9 -> runMenu()
             else -> println("Invalid Option")
         }
     } while (true)
 }
+
+//private fun addLapToRace() {
+//
+//}
 
 //DATA MANAGEMENT
 fun dataManagementMenu() {
