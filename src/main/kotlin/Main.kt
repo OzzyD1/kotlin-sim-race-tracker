@@ -40,7 +40,7 @@ fun mainMenu(): Int {
          > |   0) Exit                              |
          > ------------------------------------------
          >""".trimMargin(">"))
-    return readNextInt(" > ==>> ")
+    return readNextInt(" MAIN MENU ==>> ")
 }
 
 //RACE MANAGEMENT (CRUD)
@@ -59,7 +59,7 @@ fun raceManagementMenu() {
              > ------------------------------------------
              > |   9) Return                            |
              > ------------------------------------------
-             >""".trimMargin(">")
+             > RACE MENU ==>> """.trimMargin(">")
         )
 
         when (option) {
@@ -155,7 +155,7 @@ fun lapManagementMenu() {
              > ------------------------------------------
              > |   9) Return                            |
              > ------------------------------------------
-             >""".trimMargin(">")
+             > LAP MENU ==>> """.trimMargin(">")
         )
 
         when (option) {
@@ -178,7 +178,7 @@ fun dataManagementMenu() {
              > ------------------------------------------
              > |   9) Return                            |
              > ------------------------------------------
-             >""".trimMargin(">")
+             > DATA MENU ==>> """.trimMargin(">")
         )
 
         when (option) {
