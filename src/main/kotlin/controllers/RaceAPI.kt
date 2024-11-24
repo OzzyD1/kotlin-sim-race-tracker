@@ -27,9 +27,13 @@ class RaceAPI {
 
 //Listing
     fun listAllRaces(): String = if (races.isEmpty()) "No Races Stored" else formatListString(races)
+    fun listCompletedRaces() = if (numberofCompletedRaces() == 0) "No Completed Races Stored" else formatListString(races.filter { race -> race.raceCompleted })
+    fun listUncompletedRaces() = if (numberofUncompletedRaces() == 0) "No Uncompleted Races Stored" else formatListString(races.filter { race -> !race.raceCompleted })
 
 //Counting
     fun numberOfRaces() = races.size
+    fun numberofCompletedRaces(): Int = races.count { race -> race.raceCompleted }
+    fun numberofUncompletedRaces(): Int = races.count { race -> !race.raceCompleted}
 
 //Searching
     fun findRace(raceId: Int) = races.find { race -> race.raceID == raceId}
