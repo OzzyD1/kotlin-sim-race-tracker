@@ -10,9 +10,9 @@ data class Race(
     var raceCompleted: Boolean,
     var laps: MutableSet<Lap> = mutableSetOf()){
 
+//CRUD
     private var lastLapId = 0
     private fun getNextLapId() = lastLapId++
-
     fun addLap(lap: Lap): Boolean {
         lap.lapId = getNextLapId()
         return laps.add(lap)
@@ -39,6 +39,5 @@ data class Race(
     }
 
     fun numberOfLaps() = laps.size
-
     fun listLaps() = if (laps.isEmpty()) "No laps added to race" else formatSetString(laps)
 }

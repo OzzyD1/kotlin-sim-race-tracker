@@ -1,6 +1,7 @@
 package ie.setu
 
 import ie.setu.controllers.RaceAPI
+import ie.setu.models.Lap
 import ie.setu.models.Race
 import ie.setu.utils.isValidDriverClass
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -117,7 +118,7 @@ fun listRaces() {
 fun updateRace() {
     listAllRaces()
     if (raceAPI.numberOfRaces() > 0) {
-        val id = readNextInt("Enter race number to update")
+        val id = readNextInt("Enter race number to update: ")
         if (raceAPI.findRace(id) != null) {
             val eventName = readNextLine("Enter event name: ")
             val raceTrack = readNextLine("Enter event track: ")
@@ -162,8 +163,8 @@ fun lapManagementMenu() {
             > -------------------------------------------
              > |        LAP MENU                        |
              > ------------------------------------------
-             > |   1) Add lap to a race                |
-             > |   NA) Update lap contents on a race    |
+             > |   1) Add lap to a race                 |
+             > |   2) Update lap contents on a race     |
              > |   NA) Delete lap from a race           |
              > ------------------------------------------
              > |   9) Return                            |
@@ -172,16 +173,42 @@ fun lapManagementMenu() {
         )
 
         when (option) {
-//            1 -> addLapToRace()
+            1 -> addLapToRace()
+            2 -> updateLapInRace()
             9 -> runMenu()
             else -> println("Invalid Option")
         }
     } while (true)
 }
 
-//private fun addLapToRace() {
-//
-//}
+private fun addLapToRace() {
+    print(listAllRaces())
+    val race = raceAPI.findRace(readNextInt("\nEnter Race to Update: "))
+    if (race != null) {
+        val lapTime = readNextLine("Lap Time (MMSSmm): ")
+        val pitTime = readNextLine("Pit Time (SSmm): ")
+        val yellowFlag = readNextLine("Yellow Flag Duration (MMSSmm): ")
+        val redFlag = readNextLine("Red Flag Duration (MMSSmm): ")
+
+        val isAdded = race.addLap(Lap(lapTime = lapTime, pitTime = pitTime, yellowFlag = yellowFlag, redFlag = redFlag))
+        if (isAdded) {
+            println("Add Successful")
+        } else {
+            println("Add Unsuccessful")
+        }
+    } else {
+        println("Race not found.")
+    }
+}
+
+fun updateLapInRace() {
+    print(listAllRaces())
+    val race = raceAPI.findRace(readNextInt("\nEnter Race to Update: "))
+    if (race != null) {
+        print(race.listLaps())
+        val input = race.findOne(readNextInt("\nEnter Lap to Update: "))
+    }
+}
 
 //DATA MANAGEMENT
 fun dataManagementMenu() {
