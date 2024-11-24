@@ -7,3 +7,10 @@ This console app is used to keep track of your races and the details of the laps
     var raceTrack: String,
     var raceClass: String,
     var raceCompleted: Boolean
+
+## Data Model - Race Lap
+    var lapId: Int = 0,
+    var lapTime: Int,
+    var pitTime: Int,
+    var yellowFlag: Boolean,
+    var redFlag: Boolean
