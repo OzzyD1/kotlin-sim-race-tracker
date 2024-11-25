@@ -8,11 +8,13 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import ie.setu.utils.readNextInt
 import ie.setu.utils.readNextLine
 import ie.setu.utils.readNextBoolean
+import persistence.JSONSerializer
 import persistence.XMLSerializer
 import java.io.File
 import kotlin.system.exitProcess
 
-private val raceAPI = RaceAPI(XMLSerializer(File("races.xml")))
+//private val raceAPI = RaceAPI(XMLSerializer(File("races.xml")))
+private val raceAPI = RaceAPI(JSONSerializer(File("races.json")))
 private val logger = KotlinLogging.logger {}
 
 fun main() {
