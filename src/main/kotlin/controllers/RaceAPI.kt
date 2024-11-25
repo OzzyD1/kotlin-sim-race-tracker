@@ -1,6 +1,7 @@
 package ie.setu.controllers
 
 import ie.setu.models.Race
+import ie.setu.utils.formatListString
 
 class RaceAPI {
 
@@ -37,8 +38,4 @@ class RaceAPI {
 
 //Searching
     fun findRace(raceId: Int) = races.find { race -> race.raceID == raceId}
-
-//TODO: This belongs in utils
-    private fun formatListString(formattedRace: List<Race>): String =
-        formattedRace.joinToString(separator = "\n") { race -> races.indexOf(race).toString() + ": " + race.toString() }
 }
