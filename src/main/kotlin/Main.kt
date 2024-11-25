@@ -4,7 +4,7 @@ import ie.setu.controllers.RaceAPI
 import ie.setu.models.Lap
 import ie.setu.models.Race
 import ie.setu.utils.isValidDriverClass
-import io.github.oshai.kotlinlogging.KotlinLogging
+//import io.github.oshai.kotlinlogging.KotlinLogging
 import ie.setu.utils.readNextInt
 import ie.setu.utils.readNextLine
 import ie.setu.utils.readNextBoolean
@@ -16,11 +16,11 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.DurationUnit
+
 
 private val raceAPI = RaceAPI(JSONSerializer(File("races.json")))
 
-private val logger = KotlinLogging.logger {}
+//private val logger = KotlinLogging.logger {}
 
 fun main() {
     runMenu()
@@ -192,7 +192,7 @@ private fun addLapToRace() {
     print(listAllRaces())
     val race = raceIdPrompt()
     if (race != null) {
-        //      TODO: Add validation
+//      TODO: Add validation
         val lapTime = readLapTime()
         val pitTime = readNextLine("Pit Time (SSmm): ")
         val yellowFlag = readNextLine("Yellow Flag Duration (MMSSmm): ")
@@ -246,7 +246,7 @@ fun deleteLapinRace() {
             if (race.deleteLap(id.lapId)) {
                 println("Delete Successful")
             } else {
-                println("Delete Unuccessful")
+                println("Delete Unsuccessful")
             }
         } else {
             println("Lap not found")
