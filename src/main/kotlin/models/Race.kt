@@ -18,13 +18,9 @@ data class Race(
         return laps.add(lap)
     }
 
-    fun deleteLap(id: Int): Boolean {
-        return laps.removeIf { lap -> lap.lapId == id}
-    }
+    fun deleteLap(id: Int): Boolean = laps.removeIf { lap -> lap.lapId == id}
 
-    fun findOne(id: Int): Lap? {
-        return laps.find { lap -> lap.lapId == id }
-    }
+    fun findOne(id: Int): Lap? = laps.find { lap -> lap.lapId == id }
 
     fun updateLap(id: Int, newLap: Lap): Boolean {
         val foundLap = findOne(id)

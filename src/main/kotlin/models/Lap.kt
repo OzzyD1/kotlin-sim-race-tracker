@@ -1,9 +1,9 @@
 package ie.setu.models
 
 data class Lap (
-//Lap id also acts as lap number, just need to add 1 to user display
-    var lapId: Int = 0,
-//TODO: Write function to convert to time format
+//Starting lap at 1 because it makes sense in the context but will this have coding consequences?
+    var lapId: Int = 1,
+//TODO: Write function to convert to time format or rethink the entire strategy
     var lapTime: String,
     var pitTime: String,
     var yellowFlag: String,

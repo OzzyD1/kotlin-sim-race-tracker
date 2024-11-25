@@ -54,11 +54,9 @@ fun raceManagementMenu() {
              > |   2) List Races >                      |
              > |   3) Update a race                     |
              > |   4) Delete a race                     |
-             > |   NA) Archive a race                   |
              > |   NA) Search race (by desc)            |
              > ------------------------------------------
              > |   9) Return                            |
-             > ------------------------------------------
              > ------------------------------------------
              > RACE MENU ==>> """.trimMargin(">")
         )
@@ -164,7 +162,7 @@ fun lapManagementMenu() {
              > ------------------------------------------
              > |   1) Add lap to a race                 |
              > |   2) Update lap contents on a race     |
-             > |   NA) Delete lap from a race           |
+             > |   3) Delete lap from a race           |
              > ------------------------------------------
              > |   9) Return                            |
              > ------------------------------------------
@@ -174,6 +172,7 @@ fun lapManagementMenu() {
         when (option) {
             1 -> addLapToRace()
             2 -> updateLapInRace()
+            3 -> deleteLapinRace()
             9 -> runMenu()
             else -> println("Invalid Option")
         }
@@ -181,11 +180,11 @@ fun lapManagementMenu() {
 }
 
 private fun addLapToRace() {
-//  Displays Kotlin.Unit - this is unintentional - why here and not up there?
+//  TODO: Displays Kotlin.Unit - this is unintentional - why here and not up there?
     print(listAllRaces())
     val race = raceIdPrompt()
     if (race != null) {
-//        TODO: Add validation
+//      TODO: Add validation
         val lapTime = readNextLine("Lap Time (MMSSmm): ")
         val pitTime = readNextLine("Pit Time (SSmm): ")
         val yellowFlag = readNextLine("Yellow Flag Duration (MMSSmm): ")
@@ -202,6 +201,7 @@ private fun addLapToRace() {
     }
 }
 
+//TODO: Get caught in a loop if there is no laps in a race (Pressing 9 works?)
 fun updateLapInRace() {
     print(listAllRaces())
     val race = raceIdPrompt()
@@ -209,25 +209,36 @@ fun updateLapInRace() {
         print(race.listLaps())
         val id = race.findOne(readNextInt("\nEnter Lap to Update: "))
         if (id != null) {
-//        TODO: Add validation
+//          TODO: Add validation
             val lapTime = readNextLine("Lap Time (MMSSmm): ")
             val pitTime = readNextLine("Pit Time (SSmm): ")
             val yellowFlag = readNextLine("Yellow Flag Duration (MMSSmm): ")
             val redFlag = readNextLine("Red Flag Duration (MMSSmm): ")
 
-            //Making a new object fixes type mismatch?
-            val updatedLap = Lap(
-                lapId = id.lapId,
-                lapTime = lapTime,
-                pitTime = pitTime,
-                yellowFlag = yellowFlag,
-                redFlag = redFlag
-            )
-
-            if (race.updateLap(id.lapId, updatedLap)) {
+            if (race.updateLap(id.lapId, Lap(lapId = id.lapId, lapTime = lapTime, pitTime = pitTime, yellowFlag = yellowFlag, redFlag = redFlag))) {
                 println("Update Successful")
             } else {
                 println("Update Failed")
+            }
+        } else {
+            println("Lap not found")
+        }
+    } else {
+        println("Race not found")
+    }
+}
+
+fun deleteLapinRace() {
+    print(listAllRaces())
+    val race = raceIdPrompt()
+    if (race != null) {
+        print(race.listLaps())
+        val id = race.findOne(readNextInt("\nEnter Lap to Delete: "))
+        if (id != null) {
+            if (race.deleteLap(id.lapId)) {
+                println("Delete Successful")
+            } else {
+                println("Delete Unuccessful")
             }
         } else {
             println("Lap not found")
@@ -266,4 +277,4 @@ fun exitApp(){
 }
 
 //Helper Functions
-fun raceIdPrompt() = raceAPI.findRace(readNextInt("\nEnter Race to Update: "))
+fun raceIdPrompt() = raceAPI.findRace(readNextInt("\nEnter Race: "))
