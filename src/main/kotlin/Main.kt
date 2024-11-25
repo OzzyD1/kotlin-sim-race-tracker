@@ -13,8 +13,8 @@ import persistence.XMLSerializer
 import java.io.File
 import kotlin.system.exitProcess
 
-//private val raceAPI = RaceAPI(XMLSerializer(File("races.xml")))
 private val raceAPI = RaceAPI(JSONSerializer(File("races.json")))
+
 private val logger = KotlinLogging.logger {}
 
 fun main() {
@@ -260,8 +260,8 @@ fun dataManagementMenu() {
             > -------------------------------------------
              > |        DATA MENU                       |
              > ------------------------------------------
-             > |   1) Save races                       |
-             > |   2) Load races                       |
+             > |   1) Save races  (JSON)                |
+             > |   2) Load races  (JSON)                |
              > ------------------------------------------
              > |   9) Return                            |
              > ------------------------------------------
