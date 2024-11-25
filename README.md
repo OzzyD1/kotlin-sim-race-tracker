@@ -10,8 +10,11 @@ Basic CRUD for both models
     var raceCompleted: Boolean
 
 ## Data Model - Race Lap
-    var lapId: Int,
-    var lapTime: Int,
+    var lapId: Int, 
+    var lapTime: Duration,
     var pitTime: Int,
     var yellowFlag: String,
     var redFlag: String
+
+## Data Persistence
+Currently, the data can be saved in JSON format to be loaded after the app has been closed.

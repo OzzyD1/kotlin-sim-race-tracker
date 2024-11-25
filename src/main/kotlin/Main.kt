@@ -12,6 +12,11 @@ import persistence.JSONSerializer
 import persistence.XMLSerializer
 import java.io.File
 import kotlin.system.exitProcess
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.DurationUnit
 
 private val raceAPI = RaceAPI(JSONSerializer(File("races.json")))
 
@@ -58,7 +63,6 @@ fun raceManagementMenu() {
              > |   2) List Races >                      |
              > |   3) Update a race                     |
              > |   4) Delete a race                     |
-             > |   NA) Search race (by desc)            |
              > ------------------------------------------
              > |   9) Return                            |
              > ------------------------------------------
@@ -188,8 +192,8 @@ private fun addLapToRace() {
     print(listAllRaces())
     val race = raceIdPrompt()
     if (race != null) {
-//      TODO: Add validation
-        val lapTime = readNextLine("Lap Time (MMSSmm): ")
+        //      TODO: Add validation
+        val lapTime = readLapTime()
         val pitTime = readNextLine("Pit Time (SSmm): ")
         val yellowFlag = readNextLine("Yellow Flag Duration (MMSSmm): ")
         val redFlag = readNextLine("Red Flag Duration (MMSSmm): ")
@@ -214,7 +218,7 @@ fun updateLapInRace() {
         val id = race.findOne(readNextInt("\nEnter Lap to Update: "))
         if (id != null) {
 //          TODO: Add validation
-            val lapTime = readNextLine("Lap Time (MMSSmm): ")
+            val lapTime = readLapTime()
             val pitTime = readNextLine("Pit Time (SSmm): ")
             val yellowFlag = readNextLine("Yellow Flag Duration (MMSSmm): ")
             val redFlag = readNextLine("Red Flag Duration (MMSSmm): ")
@@ -300,3 +304,11 @@ fun exitApp(){
 
 //Helper Functions
 fun raceIdPrompt() = raceAPI.findRace(readNextInt("\nEnter Race: "))
+
+fun readLapTime(): Duration {
+    val lapMins = readNextInt("Lap Minutes: ").minutes
+    val lapSecs = readNextInt("Lap Seconds: ").seconds
+    val lapMilSecs = readNextInt("Lap Milliseconds: ").milliseconds
+    return lapMins + lapSecs + lapMilSecs
+}
+
