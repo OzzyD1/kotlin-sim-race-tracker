@@ -4,7 +4,7 @@ import ie.setu.controllers.RaceAPI
 import ie.setu.models.Lap
 import ie.setu.models.Race
 import ie.setu.utils.isValidDriverClass
-import io.github.oshai.kotlinlogging.KotlinLogging
+//import io.github.oshai.kotlinlogging.KotlinLogging
 import ie.setu.utils.readNextInt
 import ie.setu.utils.readNextLine
 import ie.setu.utils.readNextBoolean
@@ -12,10 +12,15 @@ import persistence.JSONSerializer
 import persistence.XMLSerializer
 import java.io.File
 import kotlin.system.exitProcess
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
+import kotlin.time.Duration.Companion.seconds
+
 
 private val raceAPI = RaceAPI(JSONSerializer(File("races.json")))
 
-private val logger = KotlinLogging.logger {}
+//private val logger = KotlinLogging.logger {}
 
 fun main() {
     runMenu()
@@ -58,7 +63,6 @@ fun raceManagementMenu() {
              > |   2) List Races >                      |
              > |   3) Update a race                     |
              > |   4) Delete a race                     |
-             > |   NA) Search race (by desc)            |
              > ------------------------------------------
              > |   9) Return                            |
              > ------------------------------------------
@@ -189,7 +193,7 @@ private fun addLapToRace() {
     val race = raceIdPrompt()
     if (race != null) {
 //      TODO: Add validation
-        val lapTime = readNextLine("Lap Time (MMSSmm): ")
+        val lapTime = readLapTime()
         val pitTime = readNextLine("Pit Time (SSmm): ")
         val yellowFlag = readNextLine("Yellow Flag Duration (MMSSmm): ")
         val redFlag = readNextLine("Red Flag Duration (MMSSmm): ")
@@ -214,7 +218,7 @@ fun updateLapInRace() {
         val id = race.findOne(readNextInt("\nEnter Lap to Update: "))
         if (id != null) {
 //          TODO: Add validation
-            val lapTime = readNextLine("Lap Time (MMSSmm): ")
+            val lapTime = readLapTime()
             val pitTime = readNextLine("Pit Time (SSmm): ")
             val yellowFlag = readNextLine("Yellow Flag Duration (MMSSmm): ")
             val redFlag = readNextLine("Red Flag Duration (MMSSmm): ")
@@ -242,7 +246,7 @@ fun deleteLapinRace() {
             if (race.deleteLap(id.lapId)) {
                 println("Delete Successful")
             } else {
-                println("Delete Unuccessful")
+                println("Delete Unsuccessful")
             }
         } else {
             println("Lap not found")
@@ -300,3 +304,11 @@ fun exitApp(){
 
 //Helper Functions
 fun raceIdPrompt() = raceAPI.findRace(readNextInt("\nEnter Race: "))
+
+fun readLapTime(): Duration {
+    val lapMins = readNextInt("Lap Minutes: ").minutes
+    val lapSecs = readNextInt("Lap Seconds: ").seconds
+    val lapMilSecs = readNextInt("Lap Milliseconds: ").milliseconds
+    return lapMins + lapSecs + lapMilSecs
+}
+
