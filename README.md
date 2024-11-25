@@ -15,3 +15,6 @@ Basic CRUD for both models
     var pitTime: Int,
     var yellowFlag: String,
     var redFlag: String
+    
+## Data Persistence
+Currently, the data can be saved in JSON format to be loaded after the app has been closed.
