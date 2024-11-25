@@ -14,7 +14,6 @@ private val raceAPI = RaceAPI()
 private val logger = KotlinLogging.logger {}
 
 fun main() {
-    logger.info { "App started successfully!" }
     runMenu()
 }
 
@@ -182,9 +181,11 @@ fun lapManagementMenu() {
 }
 
 private fun addLapToRace() {
+//  Displays Kotlin.Unit - this is unintentional - why here and not up there?
     print(listAllRaces())
-    val race = raceAPI.findRace(readNextInt("\nEnter Race to Update: "))
+    val race = raceIdPrompt()
     if (race != null) {
+//        TODO: Add validation
         val lapTime = readNextLine("Lap Time (MMSSmm): ")
         val pitTime = readNextLine("Pit Time (SSmm): ")
         val yellowFlag = readNextLine("Yellow Flag Duration (MMSSmm): ")
@@ -203,10 +204,36 @@ private fun addLapToRace() {
 
 fun updateLapInRace() {
     print(listAllRaces())
-    val race = raceAPI.findRace(readNextInt("\nEnter Race to Update: "))
+    val race = raceIdPrompt()
     if (race != null) {
         print(race.listLaps())
-        val input = race.findOne(readNextInt("\nEnter Lap to Update: "))
+        val id = race.findOne(readNextInt("\nEnter Lap to Update: "))
+        if (id != null) {
+//        TODO: Add validation
+            val lapTime = readNextLine("Lap Time (MMSSmm): ")
+            val pitTime = readNextLine("Pit Time (SSmm): ")
+            val yellowFlag = readNextLine("Yellow Flag Duration (MMSSmm): ")
+            val redFlag = readNextLine("Red Flag Duration (MMSSmm): ")
+
+            //Making a new object fixes type mismatch?
+            val updatedLap = Lap(
+                lapId = id.lapId,
+                lapTime = lapTime,
+                pitTime = pitTime,
+                yellowFlag = yellowFlag,
+                redFlag = redFlag
+            )
+
+            if (race.updateLap(id.lapId, updatedLap)) {
+                println("Update Successful")
+            } else {
+                println("Update Failed")
+            }
+        } else {
+            println("Lap not found")
+        }
+    } else {
+        println("Race not found")
     }
 }
 
@@ -237,3 +264,6 @@ fun exitApp(){
     println("Exiting App")
     exitProcess(0)
 }
+
+//Helper Functions
+fun raceIdPrompt() = raceAPI.findRace(readNextInt("\nEnter Race to Update: "))
