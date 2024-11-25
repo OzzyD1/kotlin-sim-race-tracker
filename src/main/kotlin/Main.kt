@@ -58,7 +58,7 @@ fun raceManagementMenu() {
              > ------------------------------------------
              > |   9) Return                            |
              > ------------------------------------------
-             > RACE MENU ==>> """.trimMargin(">")
+             > MAIN MENU/RACE MENU ==>> """.trimMargin(">")
         )
 
         when (option) {
@@ -100,7 +100,7 @@ fun listRaces() {
                   > |   2) View COMPLETED Races    |
                   > |   3) View UNCOMPLETED Races  |
                   > --------------------------------
-         > ==>> """.trimMargin(">")
+                  > MAIN MENU/RACE MENU/RACE LIST ==>> """.trimMargin(">")
         )
 
         when (option) {
@@ -166,7 +166,7 @@ fun lapManagementMenu() {
              > ------------------------------------------
              > |   9) Return                            |
              > ------------------------------------------
-             > LAP MENU ==>> """.trimMargin(">")
+             > MAIN MENU/LAP MENU ==>> """.trimMargin(">")
         )
 
         when (option) {
@@ -261,7 +261,7 @@ fun dataManagementMenu() {
              > ------------------------------------------
              > |   9) Return                            |
              > ------------------------------------------
-             > DATA MENU ==>> """.trimMargin(">")
+             > MAIN MENU/DATA MENU ==>> """.trimMargin(">")
         )
 
         when (option) {
