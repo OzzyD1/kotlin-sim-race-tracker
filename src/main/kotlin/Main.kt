@@ -8,9 +8,13 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import ie.setu.utils.readNextInt
 import ie.setu.utils.readNextLine
 import ie.setu.utils.readNextBoolean
+import persistence.JSONSerializer
+import persistence.XMLSerializer
+import java.io.File
 import kotlin.system.exitProcess
 
-private val raceAPI = RaceAPI()
+private val raceAPI = RaceAPI(JSONSerializer(File("races.json")))
+
 private val logger = KotlinLogging.logger {}
 
 fun main() {
@@ -256,8 +260,8 @@ fun dataManagementMenu() {
             > -------------------------------------------
              > |        DATA MENU                       |
              > ------------------------------------------
-             > |   NA) Save races                       |
-             > |   NA) Load races                       |
+             > |   1) Save races  (JSON)                |
+             > |   2) Load races  (JSON)                |
              > ------------------------------------------
              > |   9) Return                            |
              > ------------------------------------------
@@ -265,10 +269,28 @@ fun dataManagementMenu() {
         )
 
         when (option) {
+            1 -> save()
+            2 -> load()
             9 -> runMenu()
             else -> println("Invalid Option")
         }
     } while (true)
+}
+
+fun save() {
+    try {
+        raceAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+}
+
+fun load() {
+    try {
+        raceAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
+    }
 }
 
 fun exitApp(){

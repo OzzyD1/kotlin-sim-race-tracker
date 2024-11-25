@@ -2,8 +2,22 @@ package ie.setu.controllers
 
 import ie.setu.models.Race
 import ie.setu.utils.formatListString
+import persistence.Serializer
 
-class RaceAPI {
+
+class RaceAPI(serializerType: Serializer) {
+
+    private var serializer: Serializer = serializerType
+
+    @Throws(Exception::class)
+    fun load() {
+        races = serializer.read() as ArrayList<Race>
+    }
+
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(races)
+    }
 
     private var races = ArrayList<Race>()
 
