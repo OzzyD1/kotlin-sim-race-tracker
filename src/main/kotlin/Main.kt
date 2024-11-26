@@ -17,15 +17,20 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
-
 private val raceAPI = RaceAPI(JSONSerializer(File("races.json")))
-
 //private val logger = KotlinLogging.logger {}
 
+/**
+ * Main entry point of the app.
+ * Starts the [runMenu] menu loop.
+ */
 fun main() {
     runMenu()
 }
 
+/**
+ * Runs the [mainMenu] main menu loop.
+ */
 fun runMenu() {
     do {
         when (val option = mainMenu()) {
@@ -38,6 +43,11 @@ fun runMenu() {
     } while (true)
 }
 
+/**
+ * Displays the main menu and prompts the user for an option, the options lead to management menus
+ *
+ * @return the user's chosen option as an integer.
+ */
 fun mainMenu(): Int {
     print(""" 
         > -------------------------------------------
@@ -52,7 +62,15 @@ fun mainMenu(): Int {
     return readNextInt(" MAIN MENU ==>> ")
 }
 
-//RACE MANAGEMENT (CRUD)
+//RACE MANAGEMENT
+/**
+ * Displays the Race Management Menu which allows the user to:
+ * - Add a race [addRace]
+ * - List Races (which leads to another menu) [listRaces]
+ * - Update a race [updateRace]
+ * - Delete a race [deleteRace]
+ * - Return to root menu [runMenu]
+ * */
 fun raceManagementMenu() {
     do {
         val option = readNextInt("""
@@ -80,6 +98,14 @@ fun raceManagementMenu() {
     } while (true)
 }
 
+/**
+ * Adds a new race to the system.
+ * Prompts the user for race details, including:
+ * - Event name
+ * - Race track
+ * - Driver class (validated using [isValidDriverClass] as Pro, Pro-Am, or Am)
+ * - Completion status
+ */
 fun addRace(){
     val eventName = readNextLine("Enter event name: ")
     val raceTrack = readNextLine("Enter event track: ")
@@ -95,10 +121,28 @@ fun addRace(){
     if (isAdded) { println("$eventName added successfully") } else { println("Add Unsuccessful") }
 }
 
+/**
+ * Lists all races.
+ */
 fun listAllRaces() = println(raceAPI.listAllRaces())
+
+/**
+ * Lists all completed races.
+ */
 fun listCompletedRaces() = println(raceAPI.listCompletedRaces())
+
+/**
+ * Lists all uncompleted races.
+ */
 fun listUncompletedRaces() = println(raceAPI.listUncompletedRaces())
 
+/**
+ * Displays a menu for listing races and allows the user to filter:
+ * - All races [listAllRaces]
+ * - Completed races [listCompletedRaces]
+ * - Uncompleted races [listUncompletedRaces]
+ * If no race is found, an error is displayed
+ */
 fun listRaces() {
     if (raceAPI.numberOfRaces() > 0) {
         val option = readNextInt(
@@ -120,6 +164,15 @@ fun listRaces() {
     } else { println("No events to display") }
 }
 
+/**
+ * Updates an existing race
+ * Prompts the user to select a race by ID, then enter new details for:
+ * - Event name
+ * - Race track
+ * - Driver class (validated using [isValidDriverClass] as Pro, Pro-Am, or Am)
+ * - Completion status
+ * If the race ID is not found, an error message is displayed.
+ */
 fun updateRace() {
     listAllRaces()
     if (raceAPI.numberOfRaces() > 0) {
@@ -147,6 +200,11 @@ fun updateRace() {
     }
 }
 
+/**
+ * Deletes an existing race.
+ * Prompts the user to select a race by ID for deletion.
+ * Displays success or failure messages based.
+ */
 fun deleteRace() {
     listAllRaces()
     if (raceAPI.numberOfRaces() > 0) {
@@ -161,6 +219,13 @@ fun deleteRace() {
 }
 
 //LAP MANAGEMENT
+/**
+ * Displays the Lap Management Menu which allows the user to:
+ * - Add a lap to a race [addLapToRace]
+ * - Update lap details in a race [updateLapInRace]
+ * - Delete a lap from a race [deleteLapinRace]
+ * - Return to root menu [runMenu]
+ */
 fun lapManagementMenu() {
     do {
         val option = readNextInt(
@@ -187,12 +252,21 @@ fun lapManagementMenu() {
     } while (true)
 }
 
+/**
+ * Adds a new lap to an existing race.
+ * Prompts the user to select a race [raceIdPrompt], then enter lap details [readLapTime]:
+ * - Lap time (Stored in a 'Duration' object)
+ * - Pit time (in SSmm format)
+ * - Yellow flag duration (in MMSSmm format)
+ * - Red flag duration (in MMSSmm format)
+ * Validates race and lap selections and provides feedback on success or failure.
+ */
 private fun addLapToRace() {
-//  TODO: Displays Kotlin.Unit - this is unintentional - why here and not up there?
+//  TODO: Displays Kotlin.Unit - this is unintentional
     print(listAllRaces())
     val race = raceIdPrompt()
     if (race != null) {
-//      TODO: Add validation
+//      TODO: Add validation for time inputs
         val lapTime = readLapTime()
         val pitTime = readNextLine("Pit Time (SSmm): ")
         val yellowFlag = readNextLine("Yellow Flag Duration (MMSSmm): ")
@@ -209,6 +283,14 @@ private fun addLapToRace() {
     }
 }
 
+/**
+ * Updates an existing lap in a race.
+ * Prompts the user to:
+ * - Select a race by its ID [raceIdPrompt]
+ * - View and select a lap to update by its ID
+ * - Enter new details for the selected lap [readLapTime]
+ * Validates race and lap selections and provides feedback on success or failure.
+ */
 //TODO: Get caught in a loop if there is no laps in a race (Pressing 9 works?)
 fun updateLapInRace() {
     print(listAllRaces())
@@ -236,6 +318,13 @@ fun updateLapInRace() {
     }
 }
 
+/**
+ * Deletes an existing lap from a race.
+ * Prompts the user to:
+ * - Select a race by its ID [raceIdPrompt]
+ * - View and select a lap to delete by its ID
+ * Validates race and lap selections and provides feedback on success or failure.
+ */
 fun deleteLapinRace() {
     print(listAllRaces())
     val race = raceIdPrompt()
@@ -257,6 +346,11 @@ fun deleteLapinRace() {
 }
 
 //DATA MANAGEMENT
+/**
+ * Displays the Data Management Menu and handles options for:
+ * - Saving race data to a JSON file [save]
+ * - Loading race data from a JSON file [load]
+ */
 fun dataManagementMenu() {
     do {
         val option = readNextInt(
@@ -281,6 +375,9 @@ fun dataManagementMenu() {
     } while (true)
 }
 
+/**
+ * Saves the current race data to a JSON file.
+ */
 fun save() {
     try {
         raceAPI.store()
@@ -289,6 +386,9 @@ fun save() {
     }
 }
 
+/**
+ * Loads the current race data to a JSON file.
+ */
 fun load() {
     try {
         raceAPI.load()
@@ -297,14 +397,28 @@ fun load() {
     }
 }
 
+/**
+ * Exits and terminated the app.
+ */
 fun exitApp(){
     println("Exiting App")
     exitProcess(0)
 }
 
 //Helper Functions
+/**
+ * Prompts the user to input a race ID and fetches the corresponding race information from the race API.
+ *
+ * @return The race information retrieved from the API using the provided race ID.
+ */
 fun raceIdPrompt() = raceAPI.findRace(readNextInt("\nEnter Race: "))
 
+/**
+ * Prompts the user to input the time for a lap in minutes, seconds, and milliseconds,
+ * and returns the total lap time as a `Duration` object.
+ *
+ * @return A `Duration` object representing the lap time, calculated from the user input.
+ */
 fun readLapTime(): Duration {
     val lapMins = readNextInt("Lap Minutes: ").minutes
     val lapSecs = readNextInt("Lap Seconds: ").seconds

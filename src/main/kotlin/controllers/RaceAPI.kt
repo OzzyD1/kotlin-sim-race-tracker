@@ -123,7 +123,7 @@ class RaceAPI(serializerType: Serializer) {
      * @return A string representation of completed races or a message if none exist.
      */
     fun listCompletedRaces(): String {
-        return if (numberofCompletedRaces() == 0) {
+        return if (numberOfCompletedRaces() == 0) {
             "No Completed Races Stored"
         } else {
             races.filter { it.raceCompleted }.joinToString(separator = "\n") { race ->
@@ -151,7 +151,7 @@ class RaceAPI(serializerType: Serializer) {
      * @return A string representation of uncompleted races or a message if none exist.
      */
     fun listUncompletedRaces(): String {
-        return if (numberofUncompletedRaces() == 0) {
+        return if (numberOfUncompletedRaces() == 0) {
             "No Uncompleted Races Stored"
         } else {
             races.filter { !it.raceCompleted }.joinToString(separator = "\n") { race ->
@@ -187,14 +187,14 @@ class RaceAPI(serializerType: Serializer) {
      *
      * @return The count of completed races.
      */
-    fun numberofCompletedRaces(): Int = races.count { race -> race.raceCompleted }
+    fun numberOfCompletedRaces(): Int = races.count { race -> race.raceCompleted }
 
     /**
      * Returns the number of uncompleted races.
      *
      * @return The count of uncompleted races.
      */
-    fun numberofUncompletedRaces(): Int = races.count { race -> !race.raceCompleted}
+    fun numberOfUncompletedRaces(): Int = races.count { race -> !race.raceCompleted}
 
 //Searching
 
