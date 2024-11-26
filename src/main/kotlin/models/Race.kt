@@ -83,11 +83,11 @@ data class Race(
         return false
     }
 
-    /**
-     * Gets the total number of laps in the race.
-     *
-     * @return The number of laps as an integer.
-     */
+//    /**
+//     * Gets the total number of laps in the race.
+//     *
+//     * @return The number of laps as an integer.
+//     */
 //    fun numberOfLaps() = laps.size
 
     /**
