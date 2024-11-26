@@ -18,9 +18,9 @@ data class Race(
     var raceTrack: String,
     var raceClass: String,
     var raceCompleted: Boolean,
-    var laps: MutableSet<Lap> = mutableSetOf()){
-
-//CRUD
+    var laps: MutableSet<Lap> = mutableSetOf(),
+) {
+    // CRUD
 
     /**
      * Tracks the next available lap ID so that 1 is guaranteed start. Laps start at 1
@@ -51,7 +51,7 @@ data class Race(
      * @param id The ID of the lap to be deleted.
      * @return `true` if a lap was successfully deleted, `false` otherwise.
      */
-    fun deleteLap(id: Int): Boolean = laps.removeIf { lap -> lap.lapId == id}
+    fun deleteLap(id: Int): Boolean = laps.removeIf { lap -> lap.lapId == id }
 
     /**
      * Finds a lap in the race by its ID.
@@ -68,7 +68,10 @@ data class Race(
      * @param newLap The new [Lap] details to update.
      * @return `true` if the lap was successfully updated, `false` otherwise.
      */
-    fun updateLap(id: Int, newLap: Lap): Boolean {
+    fun updateLap(
+        id: Int,
+        newLap: Lap,
+    ): Boolean {
         val foundLap = findOne(id)
         if (foundLap != null) {
             foundLap.lapTime = newLap.lapTime
@@ -85,7 +88,7 @@ data class Race(
      *
      * @return The number of laps as an integer.
      */
-    fun numberOfLaps() = laps.size
+//    fun numberOfLaps() = laps.size
 
     /**
      * Lists all laps in the race in a formatted string.

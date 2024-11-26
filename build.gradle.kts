@@ -2,6 +2,8 @@ plugins {
     kotlin("jvm") version "2.0.20"
     // Plugin for Dokka - KDoc generating tool
     id("org.jetbrains.dokka") version "1.9.20"
+    // Plugin for Ktlint
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.2"
     application
 }
 
@@ -21,7 +23,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
     implementation("org.slf4j:slf4j-simple:2.0.16")
 
-    //For Streaming to XML and JSON
+    // For Streaming to XML and JSON
     // https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream
     implementation("com.thoughtworks.xstream:xstream:1.4.21")
     // https://mvnrepository.com/artifact/org.codehaus.jettison/jettison

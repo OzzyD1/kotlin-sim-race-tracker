@@ -4,12 +4,10 @@ import ie.setu.controllers.RaceAPI
 import ie.setu.models.Lap
 import ie.setu.models.Race
 import ie.setu.utils.isValidDriverClass
-//import io.github.oshai.kotlinlogging.KotlinLogging
+import ie.setu.utils.readNextBoolean
 import ie.setu.utils.readNextInt
 import ie.setu.utils.readNextLine
-import ie.setu.utils.readNextBoolean
 import persistence.JSONSerializer
-import persistence.XMLSerializer
 import java.io.File
 import kotlin.system.exitProcess
 import kotlin.time.Duration
@@ -18,7 +16,6 @@ import kotlin.time.Duration.Companion.minutes
 import kotlin.time.Duration.Companion.seconds
 
 private val raceAPI = RaceAPI(JSONSerializer(File("races.json")))
-//private val logger = KotlinLogging.logger {}
 
 /**
  * Main entry point of the app.
@@ -49,7 +46,8 @@ fun runMenu() {
  * @return the user's chosen option as an integer.
  */
 fun mainMenu(): Int {
-    print(""" 
+    print(
+        """ 
         > -------------------------------------------
          > |        SIM RACE TRACKER APP            |
          > ------------------------------------------
@@ -58,11 +56,13 @@ fun mainMenu(): Int {
          > |   3) Data Menu >                       |
          > |   0) Exit                              |
          > ------------------------------------------
-         >""".trimMargin(">"))
+         >""".trimMargin(">"),
+    )
     return readNextInt(" MAIN MENU ==>> ")
 }
 
-//RACE MANAGEMENT
+// RACE MANAGEMENT
+
 /**
  * Displays the Race Management Menu which allows the user to:
  * - Add a race [addRace]
@@ -73,7 +73,9 @@ fun mainMenu(): Int {
  * */
 fun raceManagementMenu() {
     do {
-        val option = readNextInt("""
+        val option =
+            readNextInt(
+                """
             > -------------------------------------------
              > |        RACE MENU                       |
              > ------------------------------------------
@@ -84,8 +86,8 @@ fun raceManagementMenu() {
              > ------------------------------------------
              > |   9) Return                            |
              > ------------------------------------------
-             > MAIN MENU/RACE MENU ==>> """.trimMargin(">")
-        )
+             > MAIN MENU/RACE MENU ==>> """.trimMargin(">"),
+            )
 
         when (option) {
             1 -> addRace()
@@ -106,7 +108,7 @@ fun raceManagementMenu() {
  * - Driver class (validated using [isValidDriverClass] as Pro, Pro-Am, or Am)
  * - Completion status
  */
-fun addRace(){
+fun addRace() {
     val eventName = readNextLine("Enter event name: ")
     val raceTrack = readNextLine("Enter event track: ")
 
@@ -118,7 +120,11 @@ fun addRace(){
     val raceCompleted = readNextBoolean("Was the race completed? (1: True or 0: False): ")
 
     val isAdded = raceAPI.add(Race(eventName = eventName, raceTrack = raceTrack, raceClass = raceClass, raceCompleted = raceCompleted))
-    if (isAdded) { println("$eventName added successfully") } else { println("Add Unsuccessful") }
+    if (isAdded) {
+        println("$eventName added successfully")
+    } else {
+        println("Add Unsuccessful")
+    }
 }
 
 /**
@@ -145,15 +151,16 @@ fun listUncompletedRaces() = println(raceAPI.listUncompletedRaces())
  */
 fun listRaces() {
     if (raceAPI.numberOfRaces() > 0) {
-        val option = readNextInt(
-            """
+        val option =
+            readNextInt(
+                """
                   > --------------------------------
                   > |   1) View ALL Races          |
                   > |   2) View COMPLETED Races    |
                   > |   3) View UNCOMPLETED Races  |
                   > --------------------------------
-                  > MAIN MENU/RACE MENU/RACE LIST ==>> """.trimMargin(">")
-        )
+                  > MAIN MENU/RACE MENU/RACE LIST ==>> """.trimMargin(">"),
+            )
 
         when (option) {
             1 -> listAllRaces()
@@ -161,7 +168,9 @@ fun listRaces() {
             3 -> listUncompletedRaces()
             else -> println("Invalid option entered: $option")
         }
-    } else { println("No events to display") }
+    } else {
+        println("No events to display")
+    }
 }
 
 /**
@@ -188,13 +197,12 @@ fun updateRace() {
 
             val raceCompleted = readNextBoolean("Was the race completed? (1: True or 0: False): ")
 
-            if (raceAPI.update(id, Race(id, eventName, raceTrack, raceClass, raceCompleted))){
+            if (raceAPI.update(id, Race(id, eventName, raceTrack, raceClass, raceCompleted))) {
                 println("Update Successful")
             } else {
                 println("Update Failed")
-                }
-        }
-        else {
+            }
+        } else {
             println("Race number not found")
         }
     }
@@ -210,7 +218,7 @@ fun deleteRace() {
     if (raceAPI.numberOfRaces() > 0) {
         val iD = readNextInt("Enter ID of race to delete: ")
         val raceToDelete = raceAPI.delete(iD)
-        if (raceToDelete){
+        if (raceToDelete) {
             println("$iD Deleted Successfully")
         } else {
             println("Delete Unsuccessful")
@@ -218,7 +226,8 @@ fun deleteRace() {
     }
 }
 
-//LAP MANAGEMENT
+// LAP MANAGEMENT
+
 /**
  * Displays the Lap Management Menu which allows the user to:
  * - Add a lap to a race [addLapToRace]
@@ -228,8 +237,9 @@ fun deleteRace() {
  */
 fun lapManagementMenu() {
     do {
-        val option = readNextInt(
-            """
+        val option =
+            readNextInt(
+                """
             > -------------------------------------------
              > |        LAP MENU                        |
              > ------------------------------------------
@@ -239,8 +249,8 @@ fun lapManagementMenu() {
              > ------------------------------------------
              > |   9) Return                            |
              > ------------------------------------------
-             > MAIN MENU/LAP MENU ==>> """.trimMargin(">")
-        )
+             > MAIN MENU/LAP MENU ==>> """.trimMargin(">"),
+            )
 
         when (option) {
             1 -> addLapToRace()
@@ -291,7 +301,6 @@ private fun addLapToRace() {
  * - Enter new details for the selected lap [readLapTime]
  * Validates race and lap selections and provides feedback on success or failure.
  */
-//TODO: Get caught in a loop if there is no laps in a race (Pressing 9 works?)
 fun updateLapInRace() {
     print(listAllRaces())
     val race = raceIdPrompt()
@@ -305,7 +314,11 @@ fun updateLapInRace() {
             val yellowFlag = readNextLine("Yellow Flag Duration (MMSSmm): ")
             val redFlag = readNextLine("Red Flag Duration (MMSSmm): ")
 
-            if (race.updateLap(id.lapId, Lap(lapId = id.lapId, lapTime = lapTime, pitTime = pitTime, yellowFlag = yellowFlag, redFlag = redFlag))) {
+            if (race.updateLap(
+                    id.lapId,
+                    Lap(lapId = id.lapId, lapTime = lapTime, pitTime = pitTime, yellowFlag = yellowFlag, redFlag = redFlag),
+                )
+            ) {
                 println("Update Successful")
             } else {
                 println("Update Failed")
@@ -345,7 +358,8 @@ fun deleteLapinRace() {
     }
 }
 
-//DATA MANAGEMENT
+// DATA MANAGEMENT
+
 /**
  * Displays the Data Management Menu and handles options for:
  * - Saving race data to a JSON file [save]
@@ -353,8 +367,9 @@ fun deleteLapinRace() {
  */
 fun dataManagementMenu() {
     do {
-        val option = readNextInt(
-            """
+        val option =
+            readNextInt(
+                """
             > -------------------------------------------
              > |        DATA MENU                       |
              > ------------------------------------------
@@ -363,8 +378,8 @@ fun dataManagementMenu() {
              > ------------------------------------------
              > |   9) Return                            |
              > ------------------------------------------
-             > MAIN MENU/DATA MENU ==>> """.trimMargin(">")
-        )
+             > MAIN MENU/DATA MENU ==>> """.trimMargin(">"),
+            )
 
         when (option) {
             1 -> save()
@@ -400,12 +415,13 @@ fun load() {
 /**
  * Exits and terminated the app.
  */
-fun exitApp(){
+fun exitApp() {
     println("Exiting App")
     exitProcess(0)
 }
 
-//Helper Functions
+// Helper Functions
+
 /**
  * Prompts the user to input a race ID and fetches the corresponding race information from the race API.
  *
@@ -425,4 +441,3 @@ fun readLapTime(): Duration {
     val lapMilSecs = readNextInt("Lap Milliseconds: ").milliseconds
     return lapMins + lapSecs + lapMilSecs
 }
-
