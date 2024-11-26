@@ -20,5 +20,5 @@ Basic CRUD for both models
 Currently, the data can be saved in JSON format to be loaded after the app has been closed.
 
 ## Getting Started
-Download kotlin-sim-race-tracker-1.0.jar from releases
-run java -jar .\kotlin-sim-race-tracker-1.0.jar from the directory where the .jar file is located
+Download `kotlin-sim-race-tracker-1.0.jar` from releases
+run `java -jar .\kotlin-sim-race-tracker-1.0.jar` from the directory where the .jar file is located
