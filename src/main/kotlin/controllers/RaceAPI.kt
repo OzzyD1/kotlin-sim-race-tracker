@@ -1,7 +1,6 @@
 package ie.setu.controllers
 
 import ie.setu.models.Race
-import ie.setu.utils.formatListString
 import persistence.Serializer
 import kotlin.time.Duration
 
@@ -23,7 +22,10 @@ class RaceAPI(serializerType: Serializer) {
     private var races = ArrayList<Race>()
 
 //CRUD
+//    Instantiate ID at 0 so that it will always start a 0
+    private var nextRaceId = 0
     fun add(race: Race): Boolean{
+        race.raceID = nextRaceId++
         return races.add(race)
     }
 

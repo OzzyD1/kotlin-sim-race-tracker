@@ -18,8 +18,8 @@ class RaceAPITest {
     private var mozaChallenbge: Race? = null
     private var sarcoMonza: Race? = null
 
-    private var populatedRaces: RaceAPI? = RaceAPI(XMLSerializer(File("races.xml")))
-    private var emptyRaces: RaceAPI? = RaceAPI(XMLSerializer(File("empty-races.xml")))
+    private var populatedRaces: RaceAPI? = RaceAPI(JSONSerializer(File("races.json")))
+    private var emptyRaces: RaceAPI? = RaceAPI(JSONSerializer(File("empty-races.json")))
 
     @BeforeEach
     fun setup() {
@@ -43,6 +43,35 @@ class RaceAPITest {
         nasrOffSeason = null
         mozaChallenbge = null
         sarcoMonza = null
+    }
+
+    @Nested
+    inner class AddRaces {
+        @Test
+        fun `Adding a Race to a populated list adds to ArrayList`() {
+            val newRace = Race(5, "WTCC", "Spa", "Pro", true)
+            // Check that populatedRaces contains 5 races
+            assertEquals(5, populatedRaces!!.numberOfRaces())
+            // Adds new race and checks if true is returned
+            assertTrue(populatedRaces!!.add(newRace))
+            // Check that the new number of races is 6 after the addition
+            assertEquals(6, populatedRaces!!.numberOfRaces())
+            // Checks the new race is at the correct index
+            assertEquals(newRace, populatedRaces!!.findRace(populatedRaces!!.numberOfRaces() - 1))
+        }
+
+        @Test
+        fun `Adding a Race to an empty list adds to ArrayList`() {
+            val newRace = Race(5, "WTCC", "Spa", "Pro", true)
+            // Check that emptyRaces contains 0 races
+            assertEquals(0, emptyRaces!!.numberOfRaces())
+            // Adds new race and checks if true is returned
+            assertTrue(emptyRaces!!.add(newRace))
+            // Check that the new number of races is 1 after the addition
+            assertEquals(1, emptyRaces!!.numberOfRaces())
+            // Checks the new race is at the correct index
+            assertEquals(newRace, emptyRaces!!.findRace(emptyRaces!!.numberOfRaces() - 1))
+        }
     }
 
     @Nested

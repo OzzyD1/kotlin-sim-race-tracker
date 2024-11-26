@@ -1,7 +1,6 @@
 package ie.setu.models
 
 import ie.setu.utils.formatSetString
-import kotlin.time.Duration
 
 data class Race(
     var raceID: Int = 0,
@@ -9,7 +8,6 @@ data class Race(
     var raceTrack: String,
     var raceClass: String,
     var raceCompleted: Boolean,
-//    var raceLength: Duration,
     var laps: MutableSet<Lap> = mutableSetOf()){
 
 //CRUD
