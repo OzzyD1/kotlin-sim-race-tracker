@@ -25,3 +25,28 @@ jobs:
       # Runs the Gradle build task
       - name: Run the Gradle Build
         run: ./gradlew build
+        
+      # Builds a 'fat' jar file with the dependencies from Gradle
+      - name: Archive Jar with Dependencies
+        uses: actions/upload-artifact@v4.4.2
+        with:
+          name: Jar with Dependencies
+          path: build/libs
+
+      # Builds a zip file with JUnit test report in it    
+      - name: Archive test report
+        uses: actions/upload-artifact@v4.4.2
+        with:
+          name: Test report
+          path: build/reports/tests/test
+
+      # Runs the Gradle dokkaHtml task
+      - name: Dokka with Gradle
+        run: ./gradlew dokkaHtml
+      
+      # Builds a zip file with the KDoc generated website in it 
+      - name: Archive KDoc Documentation
+        uses: actions/upload-artifact@v4.4.2
+        with:
+          name: KDoc Documentation Site
+          path: build/dokka/html
