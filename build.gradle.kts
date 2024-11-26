@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "ie.setu"
-version = "1.0-SNAPSHOT"
+version = "1.0"
 
 repositories {
     mavenCentral()
@@ -38,4 +38,19 @@ tasks.test {
 }
 kotlin {
     jvmToolchain(16)
+}
+
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "ie.setu.MainKt"
+    }
+    // for building a fat jar - include all dependencies
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from(sourceSets.main.get().output)
+    dependsOn(configurations.runtimeClasspath)
+    from({
+        configurations.runtimeClasspath.get()
+            .filter { it.name.endsWith("jar") }
+            .map { zipTree(it) }
+    })
 }
