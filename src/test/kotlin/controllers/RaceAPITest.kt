@@ -3,7 +3,8 @@ package controllers
 import ie.setu.controllers.RaceAPI
 import ie.setu.models.Race
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -23,7 +24,7 @@ class RaceAPITest {
 
     @BeforeEach
     fun setup() {
-        round9WatkinsGlen = Race(0,"Round 9 Watkins Glenn", "Watkins Glenn", "Pro", true)
+        round9WatkinsGlen = Race(0, "Round 9 Watkins Glenn", "Watkins Glenn", "Pro", true)
         cupCarSwimming = Race(0, "Cup Car Swimming", "Laguna Seca", "Am", false)
         nasrOffSeason = Race(1, "Nasr Off-Season", "Silverstone", "Pro-Am", true)
         mozaChallenbge = Race(2, "Moza Challenge", "Monza", "Pro", false)
@@ -76,18 +77,17 @@ class RaceAPITest {
 
     @Nested
     inner class PersistenceTests {
-
         @Test
         fun `saving and loading an empty collection in XML doesn't crash app`() {
             // Saving an empty races.XML file.
             val storingRaces = RaceAPI(XMLSerializer(File("races.xml")))
             storingRaces.store()
 
-            //Loading the empty races.xml file into a new object
+            // Loading the empty races.xml file into a new object
             val loadedRaces = RaceAPI(XMLSerializer(File("races.xml")))
             loadedRaces.load()
 
-            //Comparing the source of the races (storingRaces) with the XML loaded races (loadedRaces)
+            // Comparing the source of the races (storingRaces) with the XML loaded races (loadedRaces)
             assertEquals(0, storingRaces.numberOfRaces())
             assertEquals(0, loadedRaces.numberOfRaces())
             assertEquals(storingRaces.numberOfRaces(), loadedRaces.numberOfRaces())
@@ -102,11 +102,11 @@ class RaceAPITest {
             storingRaces.add(sarcoMonza!!)
             storingRaces.store()
 
-            //Loading races.xml into a different collection
+            // Loading races.xml into a different collection
             val loadedRaces = RaceAPI(XMLSerializer(File("races.xml")))
             loadedRaces.load()
 
-            //Comparing the source of the races (storingRaces) with the XML loaded races (loadedRaces)
+            // Comparing the source of the races (storingRaces) with the XML loaded races (loadedRaces)
             assertEquals(3, storingRaces.numberOfRaces())
             assertEquals(3, loadedRaces.numberOfRaces())
             assertEquals(storingRaces.numberOfRaces(), loadedRaces.numberOfRaces())
@@ -121,11 +121,11 @@ class RaceAPITest {
             val storingRaces = RaceAPI(JSONSerializer(File("races.json")))
             storingRaces.store()
 
-            //Loading the empty races.json file into a new object
+            // Loading the empty races.json file into a new object
             val loadedRaces = RaceAPI(JSONSerializer(File("races.json")))
             loadedRaces.load()
 
-            //Comparing the source of the races (storingRaces) with the json loaded races (loadedRaces)
+            // Comparing the source of the races (storingRaces) with the json loaded races (loadedRaces)
             assertEquals(0, storingRaces.numberOfRaces())
             assertEquals(0, loadedRaces.numberOfRaces())
             assertEquals(storingRaces.numberOfRaces(), loadedRaces.numberOfRaces())
@@ -140,11 +140,11 @@ class RaceAPITest {
             storingRaces.add(sarcoMonza!!)
             storingRaces.store()
 
-            //Loading races.json into a different collection
+            // Loading races.json into a different collection
             val loadedNotes = RaceAPI(JSONSerializer(File("races.json")))
             loadedNotes.load()
 
-            //Comparing the source of the races (storingRaces) with the json loaded races (loadedRaces)
+            // Comparing the source of the races (storingRaces) with the json loaded races (loadedRaces)
             assertEquals(3, storingRaces.numberOfRaces())
             assertEquals(3, loadedNotes.numberOfRaces())
             assertEquals(storingRaces.numberOfRaces(), loadedNotes.numberOfRaces())
@@ -154,4 +154,3 @@ class RaceAPITest {
         }
     }
 }
-

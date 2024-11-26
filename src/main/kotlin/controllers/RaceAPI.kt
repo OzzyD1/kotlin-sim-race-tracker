@@ -9,10 +9,9 @@ import kotlin.time.Duration
  * and filtering races. It uses a [Serializer] to load and store the notes persistently.
  *
  * @property serializer A serializer instance for reading and writing the notes.
- * @constructor Initializes the RaceAPI with the specified [serializerType].
+ * @constructor Initializes the RaceAPI with the specified serializerType.
  */
 class RaceAPI(serializerType: Serializer) {
-
     private var serializer: Serializer = serializerType
 
     /**
@@ -36,9 +35,7 @@ class RaceAPI(serializerType: Serializer) {
      */
     private var races = ArrayList<Race>()
 
-
-
-//CRUD
+// CRUD
 
     /**
      * Tracks the next available race ID so that 0 is guaranteed start
@@ -51,7 +48,7 @@ class RaceAPI(serializerType: Serializer) {
      * @param race The [Race] to be added.
      * @return `true` if the note was successfully added, `false` otherwise.
      */
-    fun add(race: Race): Boolean{
+    fun add(race: Race): Boolean {
         race.raceID = nextRaceId++
         return races.add(race)
     }
@@ -63,13 +60,16 @@ class RaceAPI(serializerType: Serializer) {
      * @param race The new details of the race.
      * @return `true` if the race was successfully updated, `false` otherwise.
      */
-    fun update(id: Int, race: Race?): Boolean {
+    fun update(
+        id: Int,
+        race: Race?,
+    ): Boolean {
         val foundRace = findRace(id)
         if ((foundRace != null) && (race != null)) {
             foundRace.eventName = race.eventName
             foundRace.raceTrack = race.raceTrack
             foundRace.raceClass = race.raceClass
-            foundRace.raceCompleted =race.raceCompleted
+            foundRace.raceCompleted = race.raceCompleted
             return true
         }
         return false
@@ -81,9 +81,9 @@ class RaceAPI(serializerType: Serializer) {
      * @param id The ID of the race to be deleted.
      * @return `true` if a race was successfully deleted, `false` otherwise.
      */
-    fun delete(id: Int) = races.removeIf {race -> race.raceID == id}
+    fun delete(id: Int) = races.removeIf { race -> race.raceID == id }
 
-//Listing
+// Listing
 
     /**
      * Lists all races with their details. Includes the total race time calculated
@@ -96,9 +96,9 @@ class RaceAPI(serializerType: Serializer) {
             "No Races Stored"
         } else {
             races.joinToString(separator = "\n") { race ->
-    //            https://discuss.kotlinlang.org/t/duration-could-support-sum-sumby/21377
-    //            Since we have to perform calculations on the Duration object, which stores time, we use fold() to sum multiple laps inside a Race together correctly
-    //            Duration.Zero starts at 0 time
+                //            https://discuss.kotlinlang.org/t/duration-could-support-sum-sumby/21377
+                //            Since we have to perform calculations on the Duration object, which stores time, we use fold() to sum multiple laps inside a Race together correctly
+                //            Duration.Zero starts at 0 time
                 val totalRaceTime = race.laps.fold(Duration.ZERO) { total, lap -> total + lap.lapTime }
                 """
                 Race ID: ${race.raceID}
@@ -107,10 +107,11 @@ class RaceAPI(serializerType: Serializer) {
                 Class: ${race.raceClass}
                 Completed: ${if (race.raceCompleted) "Yes" else "No"}
                 Total Race Time: ${
-                    if (totalRaceTime == Duration.ZERO)
+                    if (totalRaceTime == Duration.ZERO) {
                         "No laps entered"
-                    else
+                    } else {
                         totalRaceTime
+                    }
                 }
                 """.trimIndent()
             }
@@ -135,10 +136,11 @@ class RaceAPI(serializerType: Serializer) {
                 Class: ${race.raceClass}
                 Completed: ${if (race.raceCompleted) "Yes" else "No"}
                 Total Race Time: ${
-                    if (totalRaceTime == Duration.ZERO)
+                    if (totalRaceTime == Duration.ZERO) {
                         "No laps entered"
-                    else
+                    } else {
                         totalRaceTime
+                    }
                 }
                 """.trimIndent()
             }
@@ -163,17 +165,18 @@ class RaceAPI(serializerType: Serializer) {
                 Class: ${race.raceClass}
                 Completed: ${if (race.raceCompleted) "Yes" else "No"}
                 Total Race Time: ${
-                    if (totalRaceTime == Duration.ZERO)
+                    if (totalRaceTime == Duration.ZERO) {
                         "No laps entered"
-                    else
+                    } else {
                         totalRaceTime
+                    }
                 }
                 """.trimIndent()
             }
         }
     }
 
-//Counting
+// Counting
 
     /**
      * Returns the total number of races.
@@ -187,16 +190,16 @@ class RaceAPI(serializerType: Serializer) {
      *
      * @return The count of completed races.
      */
-    fun numberOfCompletedRaces(): Int = races.count { race -> race.raceCompleted }
+    private fun numberOfCompletedRaces(): Int = races.count { race -> race.raceCompleted }
 
     /**
      * Returns the number of uncompleted races.
      *
      * @return The count of uncompleted races.
      */
-    fun numberOfUncompletedRaces(): Int = races.count { race -> !race.raceCompleted}
+    private fun numberOfUncompletedRaces(): Int = races.count { race -> !race.raceCompleted }
 
-//Searching
+// Searching
 
     /**
      * Finds a race by its ID.
@@ -204,5 +207,5 @@ class RaceAPI(serializerType: Serializer) {
      * @param raceId The ID of the race to search for.
      * @return The [Race] with the specified ID or `null` if not found.
      */
-    fun findRace(raceId: Int) = races.find { race -> race.raceID == raceId}
+    fun findRace(raceId: Int) = races.find { race -> race.raceID == raceId }
 }
