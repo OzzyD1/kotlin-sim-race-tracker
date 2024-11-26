@@ -85,6 +85,44 @@ class RaceAPITest {
             assertEquals(storingRaces.findRace(1), loadedRaces.findRace(1))
             assertEquals(storingRaces.findRace(2), loadedRaces.findRace(2))
         }
+
+        @Test
+        fun `saving and loading an empty collection in JSON doesn't crash app`() {
+            // Saving an empty races.json file.
+            val storingRaces = RaceAPI(JSONSerializer(File("races.json")))
+            storingRaces.store()
+
+            //Loading the empty races.json file into a new object
+            val loadedRaces = RaceAPI(JSONSerializer(File("races.json")))
+            loadedRaces.load()
+
+            //Comparing the source of the races (storingRaces) with the json loaded races (loadedRaces)
+            assertEquals(0, storingRaces.numberOfRaces())
+            assertEquals(0, loadedRaces.numberOfRaces())
+            assertEquals(storingRaces.numberOfRaces(), loadedRaces.numberOfRaces())
+        }
+
+        @Test
+        fun `saving and loading an loaded collection in JSON doesn't lose data`() {
+            // Storing 3 races to the races.json file.
+            val storingRaces = RaceAPI(JSONSerializer(File("races.json")))
+            storingRaces.add(nasrOffSeason!!)
+            storingRaces.add(mozaChallenbge!!)
+            storingRaces.add(sarcoMonza!!)
+            storingRaces.store()
+
+            //Loading races.json into a different collection
+            val loadedNotes = RaceAPI(JSONSerializer(File("races.json")))
+            loadedNotes.load()
+
+            //Comparing the source of the races (storingRaces) with the json loaded races (loadedRaces)
+            assertEquals(3, storingRaces.numberOfRaces())
+            assertEquals(3, loadedNotes.numberOfRaces())
+            assertEquals(storingRaces.numberOfRaces(), loadedNotes.numberOfRaces())
+            assertEquals(storingRaces.findRace(0), loadedNotes.findRace(0))
+            assertEquals(storingRaces.findRace(1), loadedNotes.findRace(1))
+            assertEquals(storingRaces.findRace(2), loadedNotes.findRace(2))
+        }
     }
 }
 
